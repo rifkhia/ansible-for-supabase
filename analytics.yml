@@ -6,4 +6,4 @@
     ports: "{{ analytics.ports }}"
     env: "{{ analytics.env }}"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

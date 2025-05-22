@@ -18,4 +18,4 @@
     volumes:
       - "{{ config_path }}/kong/kong.yml:/home/kong/temp.yml"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

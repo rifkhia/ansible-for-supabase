@@ -7,4 +7,4 @@
     volumes:
       - "{{ config_path }}/storage:/var/lib/storage:z"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

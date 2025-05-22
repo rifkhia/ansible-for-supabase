@@ -4,4 +4,4 @@
     image: "{{ realtime.repository }}:{{ realtime.version }}"
     env: "{{ realtime.env }}"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

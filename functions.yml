@@ -17,7 +17,7 @@
     volumes:
       - "{{ config_path }}/functions:/home/deno/functions:Z"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"
     command:
       - "start"
       - "--main-service"

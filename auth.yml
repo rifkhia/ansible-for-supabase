@@ -4,4 +4,4 @@
     image: "{{ auth.repository }}:{{ auth.version }}"
     env: "{{ auth.env }}"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

@@ -4,4 +4,4 @@
     image: "{{ meta.repository }}:{{ meta.version }}"
     env: "{{ meta.env }}"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

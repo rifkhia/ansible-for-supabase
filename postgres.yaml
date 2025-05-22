@@ -24,4 +24,4 @@
       - "{{ config_path }}/db/logs.sql:/docker-entrypoint-initdb.d/migrations/99-logs.sql:Z"
       - "{{ config_path }}/db/pooler.sql:/docker-entrypoint-initdb.d/migrations/99-pooler.sql:Z"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

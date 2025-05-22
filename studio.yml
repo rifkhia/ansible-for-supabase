@@ -4,4 +4,4 @@
     image: "{{ studio.repository }}:{{ studio.version }}"
     env: "{{ studio.env }}"
     networks:
-      - name: supabase_net
+      - name: "{{ docker_network }}"

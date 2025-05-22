@@ -1,0 +1,24 @@
+---
+- name: Prepare configs
+  ansible.builtin.file:
+    path: "{{ config_path }}/logs"
+    state: directory
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: "logs"
+    dest: "{{ config_path }}"
+
+- name: Deploy vector container
+  community.docker.docker_container:
+    name: "{{ vector.name }}"
+    image: "{{ vector.repository }}:{{ vector.version }}"
+    env: "{{ vector.env }}"
+    volumes:
+      - "{{ config_path }}/logs/vector.yml:/etc/vector/vector.yml:ro,z"
+      - "{{ docker_socket_path }}:/var/run/docker.sock:ro,z"
+    networks:
+      - name: supabase_net
+    command:
+      - "--config"
+      - "/etc/vector/vector.yml"

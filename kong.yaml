@@ -1,0 +1,21 @@
+---
+- name: Prepare configs
+  ansible.builtin.file:
+    path: "{{ config_path }}/kong"
+    state: directory
+
+- name: Generate kong.yml from template
+  template:
+    src: kong/kong.yml.j2
+    dest: "{{ config_path }}/kong/kong.yml"
+
+- name: Deploy kong container
+  community.docker.docker_container:
+    name: "{{ kong_image.name }}"
+    image: "{{ kong_image.repository }}:{{ kong_image.version }}"
+    env: "{{ kong_image.env }}"
+    ports: "{{ kong_image.ports }}"
+    volumes:
+      - "{{ config_path }}/kong/kong.yml:/home/kong/temp.yml"
+    networks:
+      - name: supabase_net

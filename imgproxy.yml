@@ -1,0 +1,15 @@
+---
+- name: Prepare configs
+  ansible.builtin.file:
+    path: "{{ config_path }}/storage"
+    state: directory
+
+- name: Deploy imgproxy container
+  community.docker.docker_container:
+    name: "{{ imgproxy.name }}"
+    image: "{{ imgproxy.repository }}:{{ imgproxy.version }}"
+    env: "{{ imgproxy.env }}"
+    volumes:
+      - "{{ config_path }}/storage:/var/lib/storage:z"
+    networks:
+      - name: supabase_net

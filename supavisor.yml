@@ -1,0 +1,25 @@
+---
+- name: Prepare configs
+  ansible.builtin.file:
+    path: "{{ config_path }}/pooler"
+    state: directory
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: "pooler"
+    dest: "{{ config_path }}"
+
+- name: Deploy supavisor container
+  community.docker.docker_container:
+    name: "{{ supavisor.name }}"
+    image: "{{ supavisor.repository }}:{{ supavisor.version }}"
+    ports: "{{ supavisor.ports }}"
+    env: "{{ supavisor.env }}"
+    volumes:
+      - "{{ config_path }}/pooler/pooler.exs:/etc/pooler/pooler.exs:ro,z"
+    networks:
+      - name: supabase_net
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "/app/bin/migrate && /app/bin/supavisor eval \"File.read!('/etc/pooler/pooler.exs') |> Code.eval_string\" && /app/bin/server"

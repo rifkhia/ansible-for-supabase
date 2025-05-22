@@ -1,0 +1,24 @@
+---
+- name: Prepare configs
+  ansible.builtin.file:
+    path: "{{ config_path }}/functions"
+    state: directory
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: "functions"
+    dest: "{{ config_path }}"
+
+- name: Deploy functions container
+  community.docker.docker_container:
+    name: "{{ functions.name }}"
+    image: "{{ functions.repository }}:{{ functions.version }}"
+    env: "{{ functions.env }}"
+    volumes:
+      - "{{ config_path }}/functions:/home/deno/functions:Z"
+    networks:
+      - name: supabase_net
+    command:
+      - "start"
+      - "--main-service"
+      - "/home/deno/functions/main"

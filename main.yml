@@ -1,0 +1,52 @@
+- name: Run precheck and create docker network
+  become: true
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: run precheck
+      include_tasks: precheck.yaml
+
+    - name: Prepare docker network
+      community.docker.docker_network:
+          name: "{{ docker_network }}"
+
+- name: Install services
+  become: true
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: Install postgres
+      include_tasks: postgres.yaml
+
+    - name: Install analytics
+      include_tasks: analytics.yml
+
+    - name: Install kong gateway
+      include_tasks: kong.yaml
+
+    - name: Install supavisor
+      include_tasks: supavisor.yml
+
+    - name: Install studio
+      include_tasks: studio.yml
+
+    - name: Install meta
+      include_tasks: meta.yml
+
+    - name: Install auth
+      include_tasks: auth.yml
+
+    - name: Install imgproxy
+      include_tasks: imgproxy.yml
+
+    - name: Install storage
+      include_tasks: storage.yml
+
+    - name: Install realtime
+      include_tasks: realtime.yml
+
+    - name: Install functions
+      include_tasks: functions.yml
+
+    - name: Install vector
+      include_tasks: vector.yml

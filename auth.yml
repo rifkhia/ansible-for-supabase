@@ -1,0 +1,7 @@
+- name: Deploy auth container
+  community.docker.docker_container:
+    name: "{{ auth.name }}"
+    image: "{{ auth.repository }}:{{ auth.version }}"
+    env: "{{ auth.env }}"
+    networks:
+      - name: supabase_net

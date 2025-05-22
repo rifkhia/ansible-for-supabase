@@ -1,0 +1,10 @@
+---
+- name: Deploy storage container
+  community.docker.docker_container:
+    name: "{{ storage.name }}"
+    image: "{{ storage.repository }}:{{ storage.version }}"
+    env: "{{ storage.env }}"
+    volumes:
+      - "{{ config_path }}/storage:/var/lib/storage:z"
+    networks:
+      - name: supabase_net

@@ -1,0 +1,16 @@
+- name: Check and install if docker not installed
+  block:
+    - name: Check If Docker Is Installed
+      command: docker --version
+      register: docker_valid
+      ignore_errors: yes
+
+    - name: Print docker version
+      debug:
+        var: docker_valid
+
+    - name: Install docker
+      package:
+        name: "docker"
+        state: present
+      when: docker_valid.failed

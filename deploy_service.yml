@@ -1,0 +1,15 @@
+---
+- name: "Deploy service container"
+  community.docker.docker_container:
+    name: "{{ item.name }}"
+    image: "{{ item.repository }}:{{ item.version }}"
+    env: "{{ item.env | default({}) }}"
+    ports: "{{ item.ports | default([]) }}"
+    volumes: "{{ item.volumes | default([]) }}"
+    networks:
+      - name: "{{ docker_network }}"
+    command: "{{ item.command | default([]) }}"
+  loop: "{{ services }}"
+  loop_control:
+    loop_var: item
+    label: "{{ item.name }}"

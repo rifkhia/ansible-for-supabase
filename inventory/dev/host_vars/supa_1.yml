@@ -1,4 +1,4 @@
-base_dir: "/local/way4/supabase" # Base directory for supabase
+base_dir: "/local/supabase" # Base directory for supabase
 config_path: "{{ base_dir }}/configs" # Where config stored
 
 docker_network: "supabase_net" # Docker network name

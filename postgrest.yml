@@ -1,9 +1,0 @@
-- name: Deploy rest container
-  community.docker.docker_container:
-    name: "{{ rest.name }}"
-    image: "{{ rest.repository }}:{{ rest.version }}"
-    env: "{{ rest.env }}"
-    networks:
-      - name: "{{ docker_network }}"
-    command:
-      - "postgrest"

@@ -1,9 +1,0 @@
----
-- name: Deploy analytics container
-  community.docker.docker_container:
-    name: "{{ analytics.name }}"
-    image: "{{ analytics.repository }}:{{ analytics.version }}"
-    ports: "{{ analytics.ports }}"
-    env: "{{ analytics.env }}"
-    networks:
-      - name: "{{ docker_network }}"

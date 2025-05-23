@@ -1,7 +1,0 @@
-- name: Deploy meta container
-  community.docker.docker_container:
-    name: "{{ meta.name }}"
-    image: "{{ meta.repository }}:{{ meta.version }}"
-    env: "{{ meta.env }}"
-    networks:
-      - name: "{{ docker_network }}"

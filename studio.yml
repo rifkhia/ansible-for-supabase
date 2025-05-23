@@ -1,7 +1,0 @@
-- name: Deploy studio container
-  community.docker.docker_container:
-    name: "{{ studio.name }}"
-    image: "{{ studio.repository }}:{{ studio.version }}"
-    env: "{{ studio.env }}"
-    networks:
-      - name: "{{ docker_network }}"

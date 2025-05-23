@@ -1,0 +1,40 @@
+---
+- name: Create config directory if not exist
+  file:
+    path: "{{ config_path }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  loop:
+    - kong
+    - db
+    - functions
+    - logs
+    - pooler
+    - storage
+
+- name: Template kong configs
+  template:
+    src: kong/kong.yml.j2
+    dest: "{{ config_path }}/kong/kong.yml"
+
+- name: Template logs configs
+  template:
+    src: logs/vector.yml.j2
+    dest: "{{ config_path }}/logs/vector.yml"
+
+- name: Copy functions config
+  copy:
+    src: "templates/functions"
+    dest: "{{ config_path }}"
+
+- name: Copy postgres config
+  copy:
+    src: "templates/db"
+    dest: "{{ config_path }}"
+
+- name: Copy pooler config
+  copy:
+    src: "templates/pooler"
+    dest: "{{ config_path }}"
